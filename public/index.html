@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rickovery | Recovery Support Technology by Thistleseeds</title>
+  <meta name="description" content="Build your evidence. Prove your results. HIPAA-compliant recovery support technology for residential substance use disorder treatment.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', Arial, sans-serif; color: #333; line-height: 1.6; }
+    
+    :root {
+      --teal: #1a3a4a;
+      --teal-light: #2a5a6a;
+      --gold: #d4a84b;
+      --gold-light: #f5e6c8;
+      --gray-light: #f8f9fa;
+      --gray: #6c757d;
+    }
+    
+    nav {
+      background: var(--teal);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    .logo { color: white; font-size: 22px; font-weight: 700; text-decoration: none; }
+    .logo span { color: var(--gold); }
+    .nav-links { display: flex; list-style: none; gap: 32px; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold) !important; color: var(--teal) !important; padding: 10px 20px !important; border-radius: 6px; font-weight: 600 !important; }
+    .nav-cta:hover { background: #c49a40 !important; }
+    .mobile-menu { display: none; background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+      color: white;
+      padding: 160px 24px 100px;
+      text-align: center;
+    }
+    .hero-content { max-width: 800px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(212, 168, 75, 0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    .hero h1 { font-size: 48px; font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
+    .hero p { font-size: 20px; opacity: 0.9; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero-cta {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--teal);
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .hero-sub { margin-top: 16px; font-size: 14px; opacity: 0.7; }
+    
+    .problems { padding: 100px 24px; background: white; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header h2 { font-size: 36px; color: var(--teal); margin-bottom: 16px; }
+    .section-header p { font-size: 18px; color: var(--gray); max-width: 600px; margin: 0 auto; }
+    .problems-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .problem-card { background: var(--gray-light); border-radius: 12px; padding: 40px; border-left: 4px solid var(--gold); }
+    .problem-number {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--teal);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 36px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .problem-card h3 { font-size: 24px; color: var(--teal); margin-bottom: 12px; }
+    .problem-card .challenge { color: var(--gray); margin-bottom: 20px; }
+    .problem-card .solution { background: white; padding: 16px; border-radius: 8px; border: 1px solid #e0e0e0; }
+    .solution-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); font-weight: 600; margin-bottom: 8px; }
+    .problem-card .solution p { font-size: 14px; color: #444; margin: 0; }
+    
+    .features { padding: 100px 24px; background: var(--teal); color: white; }
+    .features .section-header h2 { color: white; }
+    .features .section-header p { color: rgba(255,255,255,0.8); }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1100px; margin: 0 auto; }
+    .feature-item { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 30px; transition: transform 0.2s, background 0.2s; }
+    .feature-item:hover { transform: translateY(-4px); background: rgba(255,255,255,0.15); }
+    .feature-icon { font-size: 32px; margin-bottom: 16px; }
+    .feature-item h3 { font-size: 18px; margin-bottom: 10px; color: var(--gold); }
+    .feature-item p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+    
+    .compliance { background: var(--gold-light); padding: 40px 24px; }
+    .compliance-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; }
+    .compliance-item { display: flex; align-items: center; gap: 12px; }
+    .compliance-check { background: var(--teal); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .compliance-item span { font-weight: 600; color: var(--teal); font-size: 14px; }
+    
+    .cta-section { padding: 100px 24px; background: white; text-align: center; }
+    .cta-section h2 { font-size: 36px; color: var(--teal); margin-bottom: 16px; }
+    .cta-section p { font-size: 18px; color: var(--gray); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-button {
+      display: inline-block;
+      background: var(--teal);
+      color: white;
+      padding: 18px 48px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26, 58, 74, 0.3); background: var(--teal-light); }
+    
+    footer { background: var(--teal); color: white; padding: 60px 24px 30px; }
+    .footer-content { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; }
+    .footer-brand .logo { margin-bottom: 12px; display: inline-block; }
+    .footer-brand p { font-size: 14px; opacity: 0.7; max-width: 300px; }
+    .footer-links h4 { font-size: 14px; font-weight: 600; margin-bottom: 16px; color: var(--gold); }
+    .footer-links a { display: block; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+    .footer-links a:hover { color: white; }
+    .footer-bottom { max-width: 1100px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 13px; opacity: 0.6; }
+    
+    @media (max-width: 900px) {
+      .problems-grid, .features-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 32px; }
+      .nav-links { display: none; }
+      .mobile-menu { display: block; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 120px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .section-header h2 { font-size: 28px; }
+      .compliance-content { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">Thistle<span>seeds</span></a>
+    <ul class="nav-links">
+      <li><a href="#problems">Why Rickovery</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="feature-builder.html" class="nav-cta">Build Your Package</a></li>
+    </ul>
+    <button class="mobile-menu" onclick="window.location.href='feature-builder.html'">☰</button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Recovery Support Technology</div>
+      <h1>Build your evidence.<br>Prove your results.</h1>
+      <p>Rickovery is a HIPAA-compliant technology platform for residential substance use disorder treatment programs.</p>
+      <a href="feature-builder.html" class="hero-cta">Build Your Feature Package →</a>
+      <p class="hero-sub">Interactive tool • No commitment required</p>
+    </div>
+  </section>
+
+  <section class="problems" id="problems">
+    <div class="container">
+      <div class="section-header">
+        <h2>Two Problems. One Platform.</h2>
+        <p>Treatment programs face two critical challenges that determine their survival and growth.</p>
+      </div>
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-number">1</div>
+          <h3>Get Paid</h3>
+          <p class="challenge">Payers demand proof that services were actually delivered. Without documentation, reimbursement is at risk.</p>
+          <div class="solution">
+            <div class="solution-label">Rickovery Delivers</div>
+            <p>Cryptographically verified attendance records, biometric verification, geofencing, and timestamped evidence chains that satisfy audit requirements.</p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-number">2</div>
+          <h3>Prove It Works</h3>
+          <p class="challenge">Funders, grants, and referral partners want evidence your program produces lasting outcomes—not just completion.</p>
+          <div class="solution">
+            <div class="solution-label">Rickovery Delivers</div>
+            <p>Post-graduation tracking, longitudinal engagement data, anonymized outcome reports, and grant-ready analytics that demonstrate lasting recovery.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="compliance">
+    <div class="compliance-content">
+      <div class="compliance-item"><div class="compliance-check">✓</div><span>HIPAA Compliant</span></div>
+      <div class="compliance-item"><div class="compliance-check">✓</div><span>42 CFR Part 2 Compliant</span></div>
+      <div class="compliance-item"><div class="compliance-check">✓</div><span>Cryptographic Evidence Chain</span></div>
+      <div class="compliance-item"><div class="compliance-check">✓</div><span>Audit-Ready Documentation</span></div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="section-header">
+      <h2>Platform Capabilities</h2>
+      <p>Modular features that scale with your program's needs</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item"><div class="feature-icon">📅</div><h3>Smart Scheduling</h3><p>Patient and staff schedule management with automated notifications for late arrivals and no-shows.</p></div>
+      <div class="feature-item"><div class="feature-icon">📍</div><h3>Attendance Verification</h3><p>Geofencing and selfie verification with cryptographic timestamps that create legal evidence chains.</p></div>
+      <div class="feature-item"><div class="feature-icon">🤖</div><h3>AI-Powered Chat</h3><p>24/7 sober buddy support, natural language scheduling, and advanced sentiment analysis.</p></div>
+      <div class="feature-item"><div class="feature-icon">👥</div><h3>Buddy System</h3><p>Peer accountability groups with shared notifications and group rewards for attendance.</p></div>
+      <div class="feature-item"><div class="feature-icon">🏆</div><h3>Rewards & Gamification</h3><p>Rickovery Coins, in-app rewards, and real-world incentives that drive engagement.</p></div>
+      <div class="feature-item"><div class="feature-icon">📊</div><h3>Analytics & Reporting</h3><p>Anonymized data exports, grant-ready reports, and natural language business intelligence.</p></div>
+      <div class="feature-item"><div class="feature-icon">🎓</div><h3>Post-Graduation Tracking</h3><p>Alumni engagement, longitudinal outcome data, and long-term program effectiveness proof.</p></div>
+      <div class="feature-item"><div class="feature-icon">⌚</div><h3>Wristband Integration</h3><p>Premium biometric monitoring with heart rate, sleep patterns, and maximum fraud prevention.</p></div>
+      <div class="feature-item"><div class="feature-icon">🛡️</div><h3>Crisis Support</h3><p>Always-on crisis button with therapeutic UI and immediate connection to response protocols.</p></div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Ready to build your package?</h2>
+    <p>Use our interactive Feature Builder to select the capabilities that fit your program's needs.</p>
+    <a href="feature-builder.html" class="cta-button">Launch Feature Builder →</a>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <a href="/" class="logo">Thistle<span>seeds</span></a>
+        <p>Recovery support technology that builds evidence and proves results.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="feature-builder.html">Feature Builder</a>
+        <a href="#problems">Why Rickovery</a>
+      </div>
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <a href="mailto:info@thistleseeds.com">info@thistleseeds.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 Thistleseeds. All rights reserved.</div>
+  </footer>
+</body>
+</html>
