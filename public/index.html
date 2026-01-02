@@ -23,7 +23,8 @@
     }
     
     nav {
-      background: var(--teal);
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 16px 24px;
       display: flex;
       justify-content: space-between;
@@ -37,11 +38,11 @@
     .logo { color: white; font-size: 22px; font-weight: 700; text-decoration: none; }
     .logo span { color: var(--gold); }
     .nav-links { display: flex; list-style: none; gap: 32px; align-items: center; }
-    .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a { color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--gold); }
     .nav-cta { background: var(--gold) !important; color: var(--teal) !important; padding: 10px 20px !important; border-radius: 6px; font-weight: 600 !important; }
     .nav-cta:hover { background: #c49a40 !important; }
-    .mobile-menu { display: none; background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+    .mobile-menu { display: none; background: none; border: none; color: var(--teal); font-size: 24px; cursor: pointer; }
     
     .hero {
       background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
@@ -159,7 +160,7 @@
 </head>
 <body>
   <nav>
-   <a href="/" class="logo"><img src="/logo.png" alt="Thistleseeds" style="height: 36px;"></a>
+   <a href="/" class="logo"><img src="/logo.png" alt="Thistleseeds" style="height: 50px;"></a>
     <ul class="nav-links">
       <li><a href="#problems">Why Rickovery</a></li>
       <li><a href="#features">Features</a></li>
@@ -243,7 +244,7 @@
   <footer>
     <div class="footer-content">
       <div class="footer-brand">
-        <a href="/" class="logo"><img src="/logo.png" alt="Thistleseeds" style="height: 36px;"></a>
+        <a href="/" class="logo"><img src="/logo.png" alt="Thistleseeds" style="height: 50px;"></a>
         <p>Recovery support technology that builds evidence and proves results.</p>
       </div>
       <div class="footer-links">
