@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThistleSeeds — AI Infrastructure for Public Sector Integrity</title>
+<meta name="description" content="Resilient AI-driven infrastructure designed to help regulators, funders, and providers restore integrity in behavioral health systems. Fraud detection, outcome accountability, and funding efficiency — without added costs.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:      #0a0c10;
+    --deep:     #0d1117;
+    --panel:    #131920;
+    --border:   #1e2a36;
+    --muted:    #2a3a4a;
+    --accent:   #9b6dff;
+    --accent2:  #c084fc;
+    --danger:   #e84545;
+    --gold:     #c9a84c;
+    --text:     #cdd9e5;
+    --dim:      #7a8fa0;
+    --white:    #f0f6fc;
+    --ff:       'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --mono:     'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--ff);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ───────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(10,12,16,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .nav-logo svg { width: 36px; height: 36px; }
+
+  .nav-wordmark {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .nav-wordmark span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    padding: 10px 24px;
+    background: var(--accent);
+    color: var(--ink) !important;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; color: var(--ink) !important; }
+
+  /* ─── HERO ──────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 80px 100px;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(155,109,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(155,109,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -20%; left: -10%;
+    width: 60%; height: 80%;
+    background: radial-gradient(ellipse, rgba(155,109,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-glow-2 {
+    position: absolute;
+    bottom: -30%; right: -10%;
+    width: 50%; height: 70%;
+    background: radial-gradient(ellipse, rgba(192,132,252,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border: 1px solid rgba(155,109,255,0.3);
+    border-radius: 100px;
+    background: rgba(155,109,255,0.06);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    width: fit-content;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  .hero-headline {
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    max-width: 820px;
+    margin-bottom: 28px;
+  }
+
+  .hero-headline .accent { color: var(--accent); }
+  .hero-headline .accent2 { color: var(--accent2); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--dim);
+    max-width: 580px;
+    line-height: 1.75;
+    margin-bottom: 52px;
+    font-weight: 400;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 80px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: #b08fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(155,109,255,0.3);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: transparent;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-metrics {
+    display: flex;
+    gap: 56px;
+    flex-wrap: wrap;
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .metric-value span { color: var(--accent); }
+
+  .metric-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .hero-visual {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px;
+  }
+
+  /* ─── TERMINAL ────────────────────────────────────── */
+  .terminal {
+    width: 100%;
+    max-width: 520px;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,200,160,0.05);
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-dot.r { background: #ff5f57; }
+  .t-dot.y { background: #febc2e; }
+  .t-dot.g { background: #28c840; }
+
+  .terminal-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--dim);
+    letter-spacing: 0.05em;
+  }
+
+  .terminal-body {
+    padding: 20px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.8;
+  }
+
+  .t-line { display: flex; gap: 8px; }
+  .t-prompt { color: var(--accent); }
+  .t-cmd { color: var(--text); }
+  .t-out { color: var(--dim); padding-left: 16px; }
+  .t-warn { color: var(--danger); }
+  .t-ok { color: var(--accent); }
+  .t-info { color: var(--accent2); }
+  .t-gold { color: var(--gold); }
+
+  .t-cursor {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--accent);
+    animation: blink 1.2s steps(1) infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+  /* ─── DIVIDER ────────────────────────────────────────── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 80px;
+  }
+
+  /* ─── CLIENTS ────────────────────────────────────────── */
+  .clients {
+    padding: 60px 80px;
+    text-align: center;
+  }
+
+  .clients-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 40px;
+  }
+
+  .clients-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 72px;
+    flex-wrap: wrap;
+  }
+
+  .client-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.45;
+    transition: opacity 0.3s;
+    filter: grayscale(1);
+    text-decoration: none;
+  }
+
+  .client-logo:hover { opacity: 0.75; filter: grayscale(0); }
+  .client-logo svg { height: 28px; }
+
+  .client-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .compliance-badges {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    background: var(--panel);
+  }
+
+  .badge svg { width: 12px; height: 12px; color: var(--accent); }
+
+  /* ─── SECTION COMMON ─────────────────────────────────── */
+  section { padding: 120px 80px; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .section-sub {
+    font-size: 1.05rem;
+    color: var(--dim);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ─── PROBLEM SECTION ────────────────────────────────── */
+  #problem {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .problem-card {
+    padding: 40px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .problem-card.threat::before { background: var(--danger); }
+  .problem-card.ops::before { background: var(--gold); }
+  .problem-card.clarity::before { background: var(--accent2); }
+
+  .problem-card-icon {
+    width: 48px; height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .problem-card.threat .problem-card-icon {
+    background: rgba(232,69,69,0.1);
+    border: 1px solid rgba(232,69,69,0.2);
+  }
+
+  .problem-card.ops .problem-card-icon {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .problem-card.clarity .problem-card-icon {
+    background: rgba(192,132,252,0.1);
+    border: 1px solid rgba(192,132,252,0.2);
+  }
+
+  .problem-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .problem-card p {
+    font-size: 0.92rem;
+    color: var(--dim);
+    line-height: 1.75;
+    margin-bottom: 28px;
+  }
+
+  .stat-row { display: flex; gap: 32px; flex-wrap: wrap; }
+
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+
+  .stat-num {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .threat .stat-num { color: var(--danger); }
+  .ops .stat-num { color: var(--gold); }
+  .clarity .stat-num { color: var(--accent2); }
+
+  .stat-desc {
+    font-size: 0.72rem;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  /* ─── CAPABILITIES ───────────────────────────────────── */
+  #capabilities { position: relative; }
+
+  .cap-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .cap-card {
+    background: var(--deep);
+    padding: 36px 32px;
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .cap-card:hover { background: var(--panel); }
+
+  .cap-card-num {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+
+  .cap-card-icon {
+    width: 40px; height: 40px;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .cap-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .cap-card p {
+    font-size: 0.875rem;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  /* ─── RICK SECTION ───────────────────────────────────── */
+  #rick {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rick-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 64px;
+    align-items: start;
+  }
+
+  .rick-intro p {
+    font-size: 0.95rem;
+    color: var(--dim);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .rick-intro p strong { color: var(--text); font-weight: 600; }
+
+  .rick-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border: 1px solid rgba(155,109,255,0.3);
+    border-radius: 4px;
+    background: rgba(155,109,255,0.06);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+  }
+
+  .rick-features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .rick-feature {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.3s;
+  }
+
+  .rick-feature:hover { border-color: rgba(155,109,255,0.25); }
+
+  .rick-feature-icon {
+    width: 36px; height: 36px;
+    border-radius: 6px;
+    background: rgba(155,109,255,0.08);
+    border: 1px solid rgba(155,109,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+
+  .rick-feature h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .rick-feature p {
+    font-size: 0.83rem;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  /* ─── PROCESS ─────────────────────────────────────────── */
+  #process {
+    position: relative;
+  }
+
+  .process-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+
+  .process-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .process-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .process-step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+  }
+
+  .step-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+  }
+
+  .step-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    margin: 4px 0;
+    min-height: 40px;
+  }
+
+  .process-step:last-child .step-line { display: none; }
+
+  .step-content { padding: 0 0 48px 24px; }
+
+  .step-phase {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .step-content h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  .step-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(155,109,255,0.06);
+    border: 1px solid rgba(155,109,255,0.15);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+
+  .process-callout {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 40px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .process-callout blockquote {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .callout-attr {
+    font-size: 0.8rem;
+    color: var(--dim);
+    font-weight: 500;
+  }
+
+  /* ─── PROCUREMENT ─────────────────────────────────────── */
+  #procurement {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .procurement-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 64px;
+    align-items: start;
+  }
+
+  .procurement-points {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .procurement-point {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .procurement-point-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(155,109,255,0.08);
+    border: 1px solid rgba(155,109,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .procurement-point h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .procurement-point p {
+    font-size: 0.85rem;
+    color: var(--dim);
+    line-height: 1.65;
+  }
+
+  .procurement-callout {
+    padding: 40px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    border-top: 3px solid var(--accent);
+  }
+
+  .procurement-callout h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .procurement-callout p {
+    font-size: 0.9rem;
+    color: var(--dim);
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .procurement-callout p:last-child { margin-bottom: 0; }
+
+  /* ─── ABOUT ───────────────────────────────────────────── */
+  #about {
+    position: relative;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-text h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+    color: var(--dim);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .about-text p strong { color: var(--text); font-weight: 600; }
+
+  .about-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .about-card {
+    padding: 28px 32px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: border-color 0.3s;
+  }
+
+  .about-card:hover { border-color: rgba(155,109,255,0.25); }
+
+  .about-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: rgba(155,109,255,0.08);
+    border: 1px solid rgba(155,109,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+
+  .about-card-text h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .about-card-text p {
+    font-size: 0.84rem;
+    color: var(--dim);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ─── CTA ─────────────────────────────────────────────── */
+  #contact {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%; height: 60%;
+    background: radial-gradient(ellipse, rgba(155,109,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .cta-inner .section-label { justify-content: center; display: flex; }
+
+  .cta-inner .section-title {
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    margin-bottom: 24px;
+  }
+
+  .cta-inner .section-sub {
+    margin: 0 auto 48px;
+    text-align: center;
+    max-width: 520px;
+  }
+
+  .cta-form {
+    display: flex;
+    gap: 12px;
+    max-width: 500px;
+    margin: 0 auto 24px;
+  }
+
+  .cta-form input {
+    flex: 1;
+    padding: 14px 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--white);
+    font-family: var(--ff);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .cta-form input:focus { border-color: var(--accent); }
+  .cta-form input::placeholder { color: var(--muted); }
+
+  .cta-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .cta-note a { color: var(--accent); text-decoration: none; }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer {
+    padding: 40px 80px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .footer-logo-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .footer-logo-text span { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .footer-right { display: flex; gap: 32px; }
+
+  .footer-right a {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-right a:hover { color: var(--accent); }
+
+  /* ─── SCROLL ANIMATIONS ───────────────────────────────── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── MOBILE ──────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .hero-visual { display: none; }
+    .hero { padding: 120px 40px 80px; }
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 40px; }
+    .clients { padding: 48px 40px; }
+    footer { padding: 32px 40px; }
+    .section-divider { margin: 0 40px; }
+    .cap-header, .about-grid, .process-header, .rick-grid, .procurement-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .cap-grid { grid-template-columns: 1fr 1fr; }
+    .problem-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .cap-grid { grid-template-columns: 1fr; }
+    .hero-headline { font-size: 2.4rem; }
+    .cta-form { flex-direction: column; }
+    .clients-row { gap: 40px; }
+    .hero-metrics { gap: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logotrans.png" alt="ThistleSeeds" style="height:42px; width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#capabilities">Solutions</a></li>
+    <li><a href="#rick">Rick™</a></li>
+    <li><a href="#process">Approach</a></li>
+    <li><a href="#procurement">Procurement</a></li>
+    <li><a href="#contact" class="nav-cta">Request a System Briefing</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="hero-badge">AI Infrastructure for Public Sector Integrity</div>
+
+  <h1 class="hero-headline">
+    Restore <span class="accent">integrity</span><br>
+    to the systems that<br>
+    <span class="accent2">can't afford</span> failure.
+  </h1>
+
+  <p class="hero-sub">
+    ThistleSeeds delivers <strong>resilient AI-driven infrastructure</strong> for regulators, funders, and providers in behavioral health systems — reducing fraud exposure, improving outcome accountability, and optimizing funding allocation. <strong>Without added costs. Without the wait.</strong>
+  </p>
+
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Request a System Briefing
+    </a>
+    <a href="#capabilities" class="btn-ghost">
+      Explore Solutions
+    </a>
+  </div>
+
+  <div class="hero-metrics">
+    <div class="metric">
+      <div class="metric-value">23<span>%</span></div>
+      <div class="metric-label">Fraud Exposure Reduction</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">10<span>/10</span></div>
+      <div class="metric-label">Clarity Improvement</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">$20</div>
+      <div class="metric-label">Efficiency Gain Per Unit</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">$0</div>
+      <div class="metric-label">Added Operating Cost</div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot r"></div>
+        <div class="t-dot y"></div>
+        <div class="t-dot g"></div>
+        <div class="terminal-title">rick™ — behavioral-health-monitor.sh</div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">▶</span><span class="t-cmd">./rick --mode continuous --region AZ-BHCS</span></div>
+        <div class="t-out">Initializing cross-system data integration...</div>
+        <div class="t-out">Linking provider networks [<span class="t-ok">✓ HIPAA</span>] [<span class="t-ok">✓ 42 CFR Part 2</span>]</div>
+        <br>
+        <div class="t-out"><span class="t-warn">⚠ ANOMALY</span>  Provider AZ-1142 — billing 340% above peer avg</div>
+        <div class="t-out"><span class="t-warn">⚠ FLAG</span>     Outcome data missing for 62 active cases</div>
+        <div class="t-out"><span class="t-warn">⚠ ALERT</span>    Funding allocation mismatch: 3 contracts</div>
+        <br>
+        <div class="t-out"><span class="t-info">→</span> Generating provider signal report</div>
+        <div class="t-out"><span class="t-info">→</span> Flagging 847 claims for regulatory review</div>
+        <div class="t-out"><span class="t-info">→</span> Modeling funding reallocation scenarios</div>
+        <br>
+        <div class="t-out"><span class="t-gold">EFFICIENCY RECOVERY</span>  $1.4M funding exposure mapped</div>
+        <div class="t-out"><span class="t-ok">✓ REPORT SEALED</span>  Timestamp: <span class="t-gold">2026-06-02T08:31Z</span></div>
+        <br>
+        <div class="t-line"><span class="t-prompt">▶</span><span class="t-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CLIENTS ────────────────────────────────────── -->
+<div class="section-divider"></div>
+<div class="clients">
+  <div class="clients-label">Trusted by organizations where accountability cannot be optional</div>
+  <div class="clients-row">
+    <div class="client-logo">
+      <svg viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="28" font-family="Arial" font-weight="700" font-size="18" fill="#ffffff" letter-spacing="1">STATE OF ARIZONA</text>
+      </svg>
+    </div>
+    <div class="client-logo">
+      <svg viewBox="0 0 220 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="28" font-family="Arial" font-weight="700" font-size="16" fill="#ffffff" letter-spacing="0.5">BEHAVIORAL HEALTH SYSTEMS</text>
+      </svg>
+    </div>
+    <div class="client-logo">
+      <svg viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="28" font-family="Arial" font-weight="700" font-size="16" fill="#ffffff" letter-spacing="0.5">PUBLIC SECTOR FUNDERS</text>
+      </svg>
+    </div>
+  </div>
+  <div class="compliance-badges">
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      HIPAA
+    </div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      42 CFR Part 2
+    </div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      SOC 2
+    </div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      FedRAMP Ready
+    </div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      NIST 800-53
+    </div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Medicaid Compliant
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROBLEM ────────────────────────────────────── -->
+<section id="problem">
+  <div class="section-label">The Structural Problem</div>
+  <h2 class="section-title">Three crises eroding public<br>behavioral health systems now.</h2>
+  <p class="section-sub" style="margin-bottom: 0;">These are not hypothetical risks. They are active, compounding failures consuming funding, undermining provider quality, and leaving the populations these systems exist to serve without adequate care.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card threat fade-up">
+      <div class="problem-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e84545" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <h3>High Fraud Exposure</h3>
+      <p>Billing fraud, phantom services, and provider identity abuse drain behavioral health funding at scale. Most systems lack the real-time detection infrastructure to catch it before the damage is done.</p>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">23%</div>
+          <div class="stat-desc">Avg Fraud Exposure Reduction</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card ops fade-up">
+      <div class="problem-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <h3>Inefficient Fund Allocation</h3>
+      <p>Funding flows to the wrong providers, the wrong programs, and the wrong regions — not from bad intent, but from the absence of real-time outcome data and cross-system visibility.</p>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">$20</div>
+          <div class="stat-desc">Efficiency Gain Per Unit</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card clarity fade-up">
+      <div class="problem-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0084ff" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Difficulty Identifying Quality Providers</h3>
+      <p>Without meaningful outcome signals and cross-system data integration, distinguishing high-performing providers from the rest is guesswork. The best providers don't get the resources they've earned.</p>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">10/10</div>
+          <div class="stat-desc">Clarity Improvement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CAPABILITIES ───────────────────────────────── -->
+<section id="capabilities">
+  <div class="cap-header">
+    <div>
+      <div class="section-label">Solutions</div>
+      <h2 class="section-title">Six systems.<br>One integrated platform.</h2>
+    </div>
+    <p class="section-sub">Each solution is designed to function independently or as a fully integrated platform — deployable without replacing your existing systems, and without added operational cost.</p>
+  </div>
+
+  <div class="cap-grid">
+    <div class="cap-card fade-up">
+      <div class="cap-card-num">01</div>
+      <svg class="cap-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+      <h3>Outcome Accountability Systems</h3>
+      <p>Real-time tracking of provider outcomes against funded contracts. Connects service delivery data to measurable results so funders can act on evidence, not anecdote.</p>
+    </div>
+    <div class="cap-card fade-up">
+      <div class="cap-card-num">02</div>
+      <svg class="cap-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <h3>Fraud Detection &amp; Prevention</h3>
+      <p>Graph-based anomaly detection, billing pattern analysis, and cross-entity claim correlation engines built for behavioral health fraud at scale. Flags exposure before funds leave the system.</p>
+    </div>
+    <div class="cap-card fade-up">
+      <div class="cap-card-num">03</div>
+      <svg class="cap-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      <h3>Cross-System Data Integration</h3>
+      <p>Unifies siloed data across EHR platforms, Medicaid management systems, case management tools, and state reporting infrastructure — without requiring a full platform migration.</p>
+    </div>
+    <div class="cap-card fade-up">
+      <div class="cap-card-num">04</div>
+      <svg class="cap-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      <h3>Provider Signal Analysis</h3>
+      <p>Continuous scoring of provider quality signals across billing behavior, outcome data, and peer benchmarks. Gives regulators and funders an objective, real-time view of network health.</p>
+    </div>
+    <div class="cap-card fade-up">
+      <div class="cap-card-num">05</div>
+      <svg class="cap-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <h3>Regulatory Decision Support</h3>
+      <p>Dashboards and reporting infrastructure designed for regulatory and oversight teams — surfacing the right data at the right time to support defensible enforcement and contract decisions.</p>
+    </div>
+    <div class="cap-card fade-up">
+      <div class="cap-card-num">06</div>
+      <svg class="cap-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <h3>Funding Efficiency Modeling</h3>
+      <p>Scenario modeling tools that show regulators and funders where dollars are underperforming, which reallocation paths generate the best outcomes, and how to justify those decisions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RICK ───────────────────────────────────────── -->
+<section id="rick">
+  <div class="section-label">Proprietary System</div>
+  <h2 class="section-title">Introducing Rick™</h2>
+  <p class="section-sub">Our flagship behavioral health infrastructure system — purpose-built for the data complexity and compliance requirements of public-sector oversight at scale.</p>
+
+  <div class="rick-grid">
+    <div class="rick-intro">
+      <div class="rick-badge">Rick™ — Behavioral Health Monitor</div>
+      <p>Rick™ is ThistleSeeds' proprietary continuous monitoring system for behavioral health ecosystems. Unlike static audits or periodic reporting tools, Rick™ operates in real time — ingesting cross-system data, surfacing anomalies as they emerge, and providing regulators with a live operational picture of their provider networks.</p>
+      <p><strong>The core insight behind Rick™:</strong> most fraud and inefficiency in behavioral health goes undetected not because the signals don't exist, but because no system is watching for them continuously and connecting them across data sources. Rick™ closes that gap.</p>
+      <p>Rick™ is built under a proprietary integration architecture that enables sole-source procurement justification for agencies seeking to deploy without a competitive bidding cycle — where urgency or system-specific requirements demand it.</p>
+    </div>
+
+    <div class="rick-features">
+      <div class="rick-feature fade-up">
+        <div class="rick-feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h4>Continuous Monitoring, Not Static Audits</h4>
+          <p>Real-time anomaly detection across billing, outcomes, and provider behavior — not quarterly snapshots that arrive after the damage is done.</p>
+        </div>
+      </div>
+      <div class="rick-feature fade-up">
+        <div class="rick-feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div>
+          <h4>Cross-System Intelligence</h4>
+          <p>Connects EHR systems, Medicaid claims data, state reporting platforms, and case management tools into a unified intelligence layer — without requiring system replacement.</p>
+        </div>
+      </div>
+      <div class="rick-feature fade-up">
+        <div class="rick-feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Compliance-Native Architecture</h4>
+          <p>HIPAA, 42 CFR Part 2, and Medicaid compliance are structural constraints, not afterthoughts. Every data flow is auditable from day one.</p>
+        </div>
+      </div>
+      <div class="rick-feature fade-up">
+        <div class="rick-feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div>
+          <h4>Decision-Ready Reporting</h4>
+          <p>Outputs are designed for regulators and oversight teams — not data scientists. Actionable findings, defensible documentation, ready for enforcement or contract decisions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ────────────────────────────────────── -->
+<section id="process">
+  <div class="process-header">
+    <div>
+      <div class="section-label">Our Approach</div>
+      <h2 class="section-title">Three phases.<br>Immediate impact.</h2>
+      <p class="section-sub" style="margin-top: 16px;">We don't run a discovery engagement that lasts six months before anything changes. Our approach is built around fast, measurable progress at each phase — with your team in control throughout.</p>
+    </div>
+    <div class="process-callout">
+      <blockquote>"We needed something defensible for our oversight board and operational for our staff — at the same time. ThistleSeeds mapped our system in week one and had Rick™ surfacing anomalies by week three."</blockquote>
+      <div class="callout-attr">— Program Director, State Behavioral Health Agency</div>
+    </div>
+  </div>
+
+  <div class="process-timeline">
+    <div class="process-step fade-up">
+      <div class="process-step-left">
+        <div class="step-num">01</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-phase">Phase 1 — Assessment</div>
+        <h3>System Mapping &amp; Gap Analysis</h3>
+        <p>We conduct a structured review of your existing data systems, provider network, and funding flows. We identify where fraud exposure, outcome data gaps, and allocation inefficiencies are concentrated — and establish a baseline before anything changes.</p>
+        <div class="step-tag">Confidential Engagement</div>
+      </div>
+    </div>
+
+    <div class="process-step fade-up">
+      <div class="process-step-left">
+        <div class="step-num">02</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-phase">Phase 2 — Integration</div>
+        <h3>Data Integration &amp; System Deployment</h3>
+        <p>Rick™ and the relevant solution modules are integrated into your existing data environment. No system replacement required. We connect your existing platforms, validate data fidelity, and establish compliance-certified data flows — with daily stakeholder visibility throughout.</p>
+        <div class="step-tag">HIPAA / 42 CFR Part 2 Certified</div>
+      </div>
+    </div>
+
+    <div class="process-step fade-up">
+      <div class="process-step-left">
+        <div class="step-num">03</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-phase">Phase 3 — Execution</div>
+        <h3>Live Operations &amp; Continuous Improvement</h3>
+        <p>Your team operates with live intelligence from day one. Rick™ monitors continuously, surfaces anomalies in real time, and generates decision-ready reports for your regulatory and oversight teams. We remain available for expansion, training, and evolving system requirements.</p>
+        <div class="step-tag">Ongoing Partner Support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCUREMENT ────────────────────────────────── -->
+<section id="procurement">
+  <div class="section-label">Procurement</div>
+  <h2 class="section-title">Designed for agencies<br>that need to move now.</h2>
+  <p class="section-sub">We understand that public procurement has constraints. Rick™ was built with those constraints in mind — including a proprietary architecture that supports sole-source justification where appropriate.</p>
+
+  <div class="procurement-grid">
+    <div class="procurement-points">
+      <div class="procurement-point fade-up">
+        <div class="procurement-point-num">01</div>
+        <div>
+          <h4>Sole-Source Eligible</h4>
+          <p>Rick™'s proprietary integration architecture and specialized behavioral health compliance design provide a legitimate basis for sole-source procurement under standard public agency guidelines, where urgency or unique capability requirements apply.</p>
+        </div>
+      </div>
+      <div class="procurement-point fade-up">
+        <div class="procurement-point-num">02</div>
+        <div>
+          <h4>No Added Operating Cost</h4>
+          <p>Our solutions are engineered to operate within existing budget structures — not require new headcount or expanded infrastructure spend. The efficiency gains fund the engagement.</p>
+        </div>
+      </div>
+      <div class="procurement-point fade-up">
+        <div class="procurement-point-num">03</div>
+        <div>
+          <h4>Compliance Documentation Provided</h4>
+          <p>We provide full procurement support documentation — system security plans, data flow diagrams, compliance attestations, and BAA-ready contract language — to reduce the administrative burden on your team.</p>
+        </div>
+      </div>
+      <div class="procurement-point fade-up">
+        <div class="procurement-point-num">04</div>
+        <div>
+          <h4>Phased Engagement Options</h4>
+          <p>Start with Assessment only. Expand to Integration when ready. Procurement can be structured to match your agency's fiscal and approval cycles without delaying the work that matters most.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="procurement-callout fade-up">
+      <h3>Ready to discuss procurement options?</h3>
+      <p>A System Briefing is a confidential, no-obligation conversation. We'll walk through your agency's specific situation — data environment, budget structure, timeline, and compliance requirements — and tell you exactly what a ThistleSeeds engagement would look like for you.</p>
+      <p>If we're not the right fit, we'll tell you that too. Every inquiry is treated as confidential.</p>
+      <br>
+      <a href="#contact" class="btn-primary" style="display: inline-flex;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Request a System Briefing
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ───────────────────────────────────────── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <div class="section-label">About ThistleSeeds</div>
+      <h2>Built for the systems<br>that can't afford to fail.</h2>
+      <p>ThistleSeeds is a precision infrastructure team with deep roots in public sector compliance, behavioral health data systems, and high-stakes regulatory environments. We exist because the organizations that serve the most vulnerable populations are often working with the least capable infrastructure.</p>
+      <p><strong>Every engagement is handled by principals.</strong> The people you brief are the people who build. No hand-off, no account manager buffer, no offshore delivery team — which is how we move at a pace that larger vendors structurally cannot match.</p>
+      <p>We combine startup agility with enterprise-grade compliance standards. That's the combination that's consistently unavailable from government contractors and too rare from boutique shops.</p>
+    </div>
+    <div class="about-visual">
+      <div class="about-card fade-up">
+        <div class="about-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="about-card-text">
+          <h4>Principal-Led, Always</h4>
+          <p>No layers, no delegates. The engineers who design are the engineers who deliver and stand behind every system in production.</p>
+        </div>
+      </div>
+      <div class="about-card fade-up">
+        <div class="about-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="about-card-text">
+          <h4>Engineered for Public Sector Speed</h4>
+          <p>When a program has active fraud exposure or a funding decision can't wait for a six-month vendor engagement, our structure eliminates the overhead that slows large firms at critical moments.</p>
+        </div>
+      </div>
+      <div class="about-card fade-up">
+        <div class="about-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="about-card-text">
+          <h4>Compliance Without Compromise</h4>
+          <p>HIPAA, 42 CFR Part 2, Medicaid, and NIST compliance are structural requirements — not features we add at the end. Every system ships audit-ready.</p>
+        </div>
+      </div>
+      <div class="about-card fade-up">
+        <div class="about-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+        </div>
+        <div class="about-card-text">
+          <h4>Long-Term Partnership Available</h4>
+          <p>System deployment is the starting point. Ongoing retainer relationships for agencies that need a trusted technical partner as their infrastructure and regulatory environment evolves.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ────────────────────────────────────────── -->
+<section id="contact">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="section-label">Engage ThistleSeeds</div>
+    <h2 class="section-title">The exposure is active.<br>Let's talk today.</h2>
+    <p class="section-sub">A confidential, no-obligation System Briefing. We'll assess your situation, walk through what a ThistleSeeds engagement looks like for your agency, and tell you within 24 hours whether we're the right fit.</p>
+    <div class="cta-form">
+      <input type="email" placeholder="Your work email address" />
+      <button class="btn-primary" type="button">
+        Request Briefing
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="cta-note">
+      Or reach us directly: <a href="mailto:engage@thistleseeds.com">engage@thistleseeds.com</a>
+      &nbsp;·&nbsp; All inquiries treated as confidential.
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────── -->
+<footer>
+  <div class="footer-left">
+    <a href="#" class="footer-logo">
+      <img src="logotrans.png" alt="ThistleSeeds" style="height:32px; width:auto; opacity:0.6;">
+    </a>
+    <span class="footer-copy">© 2026 ThistleSeeds LLC. All rights reserved.</span>
+  </div>
+  <div class="footer-right">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Engagement</a>
+    <a href="mailto:engage@thistleseeds.com">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, (entry.target.dataset.delay || 0));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 80;
+    observer.observe(el);
+  });
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 40
+      ? 'rgba(10,12,16,0.97)'
+      : 'rgba(10,12,16,0.88)';
+  });
+
+  document.querySelector('.cta-form button').addEventListener('click', function() {
+    const input = document.querySelector('.cta-form input');
+    if (input.value && input.value.includes('@')) {
+      input.value = '';
+      input.placeholder = 'Request received — we\'ll be in touch within 24 hours.';
+      input.style.borderColor = 'var(--accent)';
+      this.textContent = 'Sent ✓';
+      this.style.background = '#7c3aed';
+      setTimeout(() => {
+        input.placeholder = 'Your work email address';
+        input.style.borderColor = '';
+        this.innerHTML = 'Request Briefing <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        this.style.background = '';
+      }, 4000);
+    } else {
+      input.style.borderColor = 'var(--danger)';
+      input.focus();
+      setTimeout(() => { input.style.borderColor = ''; }, 2000);
+    }
+  });
+</script>
+</body>
+</html>
