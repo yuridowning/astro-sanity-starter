@@ -1,0 +1,5 @@
+---
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+---
+<Fragment set:html={readFileSync(resolve('public/index.html'), 'utf-8')} />
